@@ -1,0 +1,103 @@
+<div class="bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-semibold text-gray-900">Publish a Message</h1>
+      <div class="flex justify-end space-x-4">
+				<div>
+					<%= link_to new_topic_path, class: "inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" do %>
+						<svg class="-ml-0.5 mr-1.5 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+							<path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+						</svg>
+						Add New Topic
+					<% end %>
+				</div>
+
+				<div>
+					<%= link_to new_subscriber_path, class: "inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500" do %>
+						<svg class="-ml-0.5 mr-1.5 h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+							<path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+						</svg>
+						Add New Subscriber
+					<% end %>
+				</div>
+			</div>
+    </div>
+
+    <% if flash[:error].present? %>
+      <div class="rounded-md bg-red-50 p-4 mb-6">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium text-red-800"><%= flash[:error] %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= form_with model: @message || Message.new, url: messages_path, method: :post, local: true, data: { turbo: false }, class: "space-y-6" do |form| %>
+      <div>
+        <%= form.label :topic_id, "Select Topic", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+          <%= form.select :topic_id, @topics.pluck(:name, :id), 
+              { prompt: "Choose a topic" }, 
+              class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+        </div>
+      </div>
+
+      <div>
+        <%= form.label :publisher_name, "Publisher Name", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+          <%= form.text_field :publisher_name, 
+              class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+        </div>
+      </div>
+
+      <div>
+        <%= form.label :content, "Message Content", class: "block text-sm font-medium text-gray-700" %>
+        <div class="mt-1">
+          <%= form.text_area :content, rows: 4,
+              class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+        </div>
+      </div>
+
+      <div>
+        <%= form.submit "Publish Message", 
+            class: "inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+      </div>
+    <% end %>
+
+    <% if @recipients.present? %>
+      <div class="mt-8">
+        <h2 class="text-lg font-medium text-gray-900 mb-4">Message was received by:</h2>
+        <ul class="divide-y divide-gray-200 rounded-md border border-gray-200">
+          <% @recipients.each do |recipient| %>
+            <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+              <div class="flex w-0 flex-1 items-center">
+                <span class="ml-2 w-0 flex-1 truncate"><%= recipient %></span>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if flash[:notice] %>
+      <div class="mt-4 rounded-md bg-green-50 p-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium text-green-800"><%= flash[:notice] %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
