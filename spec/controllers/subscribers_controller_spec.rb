@@ -18,7 +18,7 @@ RSpec.describe SubscribersController, type: :controller do
       let(:valid_params) do
         {
           subscriber: {
-            name: 'John Doe',
+            name: 'John Doe'
           }
         }
       end
@@ -44,4 +44,4 @@ RSpec.describe SubscribersController, type: :controller do
       end
     end
   end
-end 
+end

@@ -17,4 +17,4 @@ class SubscribersController < ApplicationController
   def subscriber_params
     params.require(:subscriber).permit(:name, :topic_id)
   end
-end 
+end

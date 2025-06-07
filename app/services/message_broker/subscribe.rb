@@ -10,7 +10,7 @@ module MessageBroker
     def call
       subscriber = Subscriber.find_by!(name: subscriber_name)
       topic = Topic.find(topic_id)
-      
+
       subscription = Subscription.find_or_create_by!(
         subscriber: subscriber,
         topic: topic
@@ -19,4 +19,4 @@ module MessageBroker
       subscription
     end
   end
-end 
+end

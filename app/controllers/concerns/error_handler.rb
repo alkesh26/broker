@@ -15,7 +15,7 @@ module ErrorHandler
   def handle_standard_error(error)
     Rails.logger.error("Standard Error: #{error.message}")
     Rails.logger.error(error.backtrace.join("\n"))
-    
+
     respond_to do |format|
       format.html do
         flash[:error] = "An unexpected error occurred: #{error.message}"
@@ -27,7 +27,7 @@ module ErrorHandler
 
   def handle_not_found(error)
     Rails.logger.error("Record Not Found: #{error.message}")
-    
+
     respond_to do |format|
       format.html do
         flash[:error] = "The requested resource was not found: #{error.message}"
@@ -39,7 +39,7 @@ module ErrorHandler
 
   def handle_validation_error(error)
     Rails.logger.error("Validation Error: #{error.message}")
-    
+
     respond_to do |format|
       format.html do
         flash[:error] = "Validation failed: #{error.record.errors.full_messages.join(", ")}"
@@ -51,7 +51,7 @@ module ErrorHandler
 
   def handle_parameter_missing(error)
     Rails.logger.error("Parameter Missing: #{error.message}")
-    
+
     respond_to do |format|
       format.html do
         flash[:error] = "Required parameters are missing: #{error.message}"

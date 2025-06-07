@@ -4,4 +4,4 @@ FactoryBot.define do
     sequence(:publisher_name) { |n| "Publisher #{n}" }
     sequence(:content) { |n| "Message content #{n}" }
   end
-end 
+end

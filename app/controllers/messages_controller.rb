@@ -7,14 +7,14 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     @topics = Topic.all
-    
+
     @message.save!
     @recipients = MessageBroker::Publish.new(
       @message.publisher_name,
       @message.topic.name,
       @message.content
     ).call
-    
+
     flash.now[:notice] = "Message published to topic #{@message.topic.name}"
     render :new
   end

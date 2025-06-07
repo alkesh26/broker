@@ -13,12 +13,12 @@ Rails.application.routes.draw do
   root "messages#new"
   get "/demo", to: "messages#demo"
 
-  resources :messages, only: [:new, :create] do
+  resources :messages, only: [ :new, :create ] do
     collection do
       get :demo
     end
   end
 
-  resources :subscribers, only: [:new, :create]
-  resources :topics, only: [:new, :create]
+  resources :subscribers, only: [ :new, :create ]
+  resources :topics, only: [ :new, :create ]
 end

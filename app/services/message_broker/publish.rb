@@ -24,4 +24,4 @@ module MessageBroker
       subscribers.map(&:name)
     end
   end
-end 
+end

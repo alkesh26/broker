@@ -15,4 +15,4 @@ RSpec.describe Message, type: :model do
       expect(build(:message)).to be_valid
     end
   end
-end 
+end
